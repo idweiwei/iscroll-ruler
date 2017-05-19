@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        html {
+            -ms-touch-action: none;
+        }
+
+        body,ul,li {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        body {
+            font-size: 12px;
+            font-family: ubuntu, helvetica, arial;
+            overflow: hidden; /* this is important to prevent the whole page to bounce */
+        }
+
+
+        .container{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .masker{
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+
+        }
+        .height-masker{
+            background: linear-gradient(#fff 0, rgba(245, 245, 245, 0) 20%, rgba(245, 245, 245, 0) 80%, #fff 100%);
+            background: -webkit-gradient(linear, left bottom, left top, from(#fff), color-stop(0.2, rgba(245, 245, 245, 0)), color-stop(0.8, rgba(245, 245, 245, 0)), to(#fff));
+            background: -webkit-linear-gradient(#fff 0, rgba(245, 245, 245, 0) 20%, rgba(245, 245, 245, 0) 80%, #fff 100%);
+            background: -moz-linear-gradient(#fff 0, rgba(245, 245, 245, 0) 30%, rgba(245, 245, 245, 0) 80%, #fff 100%);
+        }
+        .weight-masker{
+            background: linear-gradient(left, #fff 0, rgba(245, 245, 245, 0) 52%, rgba(245, 245, 245, 0) 48%, #fff 100%);
+            background: -webkit-gradient(linear, left top, right bottom, from(#fff), color-stop(0.52, rgba(245, 245, 245, 0)), color-stop(0.48, rgba(245, 245, 245, 0)), to(#fff));
+            background: -webkit-linear-gradient(left, #fff 0, rgba(245, 245, 245, 0) 52%, rgba(245, 245, 245, 0) 48%, #fff 100%);
+            background: -moz-linear-gradient(left, #fff 0, rgba(245, 245, 245, 0) 52%, rgba(245, 245, 245, 0) 48%, #fff 100%);
+        }
+
+
+
+        .height{
+            height: 190px;
+            width: 54px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            padding: 5px;
+            margin: 20px 50px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .height-ruler{
+            height: 100%;
+            position: relative;
+        }
+        .height-ruler ul{
+            position: absolute;
+            width: 100%;
+        }
+        .height-ruler li{
+            height: 1px;
+            width: 10px;
+            background: #000;
+            margin-bottom: 3px;
+            list-style: none;
+            position: relative;
+        }
+        .height-ruler li:nth-of-type(5n),.height-ruler li:nth-of-type(1){
+            width: 15px;
+        }
+        .height-ruler li:nth-of-type(5n):after,.height-ruler li:nth-of-type(1):after{
+            content: attr(meter);
+            position: absolute;
+            right: -20px;
+            top: -6px;
+            font-size: 0.4rem;
+            text-align: left;
+            width: 20px;
+            height: 15px;
+        }
+
+        .weight{
+            width: 190px;
+            height: 54px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            padding: 5px;
+            margin: 50px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .weight-ruler{
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        .weight-ruler ul{
+            position: absolute;
+            height: 100%;
+            width: 480px;
+        }
+        .weight-ruler li{
+            height: 10px;
+            width: 1px;
+            float: left;
+            background: #000;
+            margin-right: 3px;
+            list-style: none;
+            position: relative;
+        }
+        .weight-ruler li:nth-of-type(5n),.weight-ruler li:nth-of-type(1){
+            height: 15px;
+        }
+        .weight-ruler li:nth-of-type(5n):after,.weight-ruler li:nth-of-type(1):after{
+            content: attr(gram);
+            position: absolute;
+            right: -20px;
+            top: 20px;
+            font-size: 0.4rem;
+            text-align: center;
+            width: 40px;
+            height: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="height">
+            <div class="masker height-masker"></div>
+            <div class="ruler height-ruler">
+                <ul>
+                    <!--<li></li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="weight">
+            <div class="masker weight-masker"></div>
+            <div class="ruler weight-ruler">
+                <ul>
+                    <!--<li></li>-->
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <!--<script src="iscroll-probe.js"></script>-->
+    <script src="iscroll.js"></script>
+    <script>
+        var heightUl = document.querySelector('.height ul'),
+            weightUl = document.querySelector('.weight ul');
+        var str='',str2='';
+        for(var i=1; i<=120; i++){
+            if(i%10==0 || i==1){
+                str+='<li meter="'+(36-(12+i/10>>0))/10+'"></li>';
+                str2+='<li gram="'+((i+30)/10>>0)*10+'kg"></li>'
+            }else{
+                str+='<li></li>';
+                str2+='<li></li>'
+            }
+        }
+        heightUl.innerHTML = str;
+        weightUl.innerHTML = str2;
+
+        var hruler = new IScroll('.height-ruler');
+        hruler.on('scrollEnd',function () {
+            console.log(this.y/4>>0);
+        });
+
+        var wruler = new IScroll('.weight-ruler',{
+            scrollX: true,
+            scrollY: false
+        });
+        wruler.on('scrollEnd',function () {
+            console.log(this.x/4>>0);
+        })
+
+    </script>
+</body>
+</html>
